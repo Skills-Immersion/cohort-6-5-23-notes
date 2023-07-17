@@ -3,16 +3,20 @@ import React from 'react';
 // lowerCamelCase
 // UpperCamelCase
 
-function ContactCard(props) {
-  console.log(props.name);
+function ContactCard({ name = "Unknown Contact", phoneNumber, email = '' }) {
+  console.log(name);
+  // conditionally, if their email ends with thinkful.com, show the thinkful logo for profile picture; otherwise, show a bear
   return <li>
     <div>
-      <img src="https://placebear.com/100/100" />
+      <img src={email.endsWith("thinkful.com") ?
+        "https://asset.brandfetch.io/id8GqXsHTK/idHKauAYpb.jpeg" :
+        "https://placebear.com/100/100"} />
     </div>
     <div>
-      <h2>{props.name}</h2>
-      <h4>{props.phoneNumber}</h4>
-      <h4><a href={`mailto:${props.email}`} >{props.email}</a></h4>
+      <h2>{name}</h2>
+      {phoneNumber.includes('5') ? <h4>{phoneNumber}</h4> : ''}
+
+      <h4><a href={`mailto:${email}`} >{email}</a></h4>
     </div>
   </li>
 }
