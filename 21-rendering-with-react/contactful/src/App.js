@@ -1,5 +1,6 @@
 // imports - pulling in whatever we need from other files
 import './App.css';
+import ContactCard from './ContactCard';
 import Header from './Header';
 
 // App function is the component
@@ -11,26 +12,8 @@ function App() {
       <Header />
       <main>
         <ul>
-          <li>
-            <div>
-              <img src="https://placebear.com/100/100" />
-            </div>
-            <div>
-              <h2>Michelle</h2>
-              <h4>(555) 555-5555</h4>
-              <h4>mferreirae@thinkful.com</h4>
-            </div>
-          </li>
-          <li>
-            <div>
-              <img src="https://placebear.com/100/100" />
-            </div>
-            <div>
-              <h2>Michelle</h2>
-              <h4>(555) 555-5555</h4>
-              <h4>mferreirae@thinkful.com</h4>
-            </div>
-          </li>
+          <ContactCard name="Michelle" email="mferreirae@thinkful.com" phoneNumber="(555) 555-5555" />
+          <ContactCard name="Alex" email="alex@alex.com" phoneNumber="(432) 324-2341" />
         </ul>
       </main>
     </div>
