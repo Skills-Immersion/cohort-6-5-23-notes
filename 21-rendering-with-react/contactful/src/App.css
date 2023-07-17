@@ -1,0 +1,9 @@
+.contacts-header {
+  background-color: lightseagreen;
+  padding: 10px;
+  margin: 20px;
+}
+
+li {
+  display: flex;
+}
