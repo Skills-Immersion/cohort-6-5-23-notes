@@ -5,10 +5,10 @@ import React from 'react';
 
 function ContactCard({ name = "Unknown Contact", phoneNumber, email = '' }) {
   console.log(name);
-  // conditionally, if their email ends with thinkful.com, show the thinkful logo for profile picture; otherwise, show a bear
+  // conditionally, if their email ends with chegg.com, show the thinkful logo for profile picture; otherwise, show a bear
   return <li>
     <div>
-      <img src={email.endsWith("thinkful.com") ?
+      <img src={email.endsWith("chegg.com") ?
         "https://asset.brandfetch.io/id8GqXsHTK/idHKauAYpb.jpeg" :
         "https://placebear.com/100/100"} />
     </div>
