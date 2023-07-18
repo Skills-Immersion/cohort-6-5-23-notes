@@ -21,7 +21,8 @@ test('Contact Card renders basic data correctly', () => {
 test('Contact Card does not render phone numbers without a 5 in them', () => {
   const phoneNumber = '012346789';
   render(<ContactCard phoneNumber={phoneNumber} />);
-  const phoneNumElement = screen.findByText(phoneNumber);
+  const phoneNumElement = screen.queryByText(phoneNumber);
+  expect(phoneNumElement).toBeNull();
 })
 
 test('Contact Card renders Unknown Contact when no name is given', () => {
