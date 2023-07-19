@@ -1,12 +1,8 @@
 // import
-import React, { useState } from 'react';
+import React from 'react';
 
 // define the function that is the component
-function Header() {
-
-  // we can't just use standard JS variables - need to use a state variable so React knows to update the page
-  //let isLoggedIn = false;
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+function Header({ isLoggedIn, setIsLoggedIn }) {
 
   function logTheThing() {
     console.log('the thing happened');

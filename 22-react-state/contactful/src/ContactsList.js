@@ -2,7 +2,7 @@ import React from 'react';
 import ContactCard from './ContactCard';
 import './ContactsList.css';
 
-function ContactsList() {
+function ContactsList({ isLoggedIn }) {
   let contacts = [
     {
       name: "Michelle",
@@ -30,6 +30,7 @@ function ContactsList() {
       name={c.name}
       email={c.email}
       phoneNumber={c.phoneNumber}
+      isLoggedIn={isLoggedIn}
     />)}
     <table>
       <thead>

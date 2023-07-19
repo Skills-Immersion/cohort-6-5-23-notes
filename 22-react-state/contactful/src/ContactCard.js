@@ -3,7 +3,7 @@ import React from 'react';
 // lowerCamelCase
 // UpperCamelCase
 
-function ContactCard({ name = "Unknown Contact", phoneNumber = '', email = '' }) {
+function ContactCard({ name = "Unknown Contact", phoneNumber = '', email = '', isLoggedIn }) {
   console.log(name);
   // conditionally, if their email ends with chegg.com, show the thinkful logo for profile picture; otherwise, show a bear
   return <li>
@@ -14,9 +14,13 @@ function ContactCard({ name = "Unknown Contact", phoneNumber = '', email = '' })
     </div>
     <div>
       <h2>{name}</h2>
-      {phoneNumber.includes('5') ? <h4>{phoneNumber}</h4> : ''}
+      {
+        isLoggedIn && <>
+          {phoneNumber.includes('5') ? <h4>{phoneNumber}</h4> : ''}
 
-      <h4><a href={`mailto:${email}`} >{email}</a></h4>
+          <h4><a href={`mailto:${email}`} >{email}</a></h4>
+        </>
+      }
     </div>
   </li>
 }
