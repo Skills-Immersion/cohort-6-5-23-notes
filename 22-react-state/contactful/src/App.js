@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import './App.css';
 import ContactsList from './ContactsList';
 import Header from './Header';
+import DiceRoller from './DiceRoller';
 
 // App function is the component
 // function name is Capitalized (UpperCamelCase)
@@ -15,6 +16,7 @@ function App() {
   return (
     <div className="App">
       <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+      <DiceRoller />
       <main>
         <ContactsList isLoggedIn={isLoggedIn} />
       </main>

@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ContactCard from './ContactCard';
 import './ContactsList.css';
 
 function ContactsList({ isLoggedIn }) {
-  let contacts = [
+  const [contacts, setContacts] = useState([
     {
       name: "Michelle",
       email: "mferreirae@chegg.com",
@@ -15,7 +15,18 @@ function ContactsList({ isLoggedIn }) {
     }, {
       phoneNumber: "(325) 989-3982"
     }
-  ]
+  ])
+
+  function setStarred(phoneNumberToStar) {
+    setContacts(contacts.map(c => 
+      c.phoneNumber === phoneNumberToStar ?
+        { ...c, starred: true } :
+        c))
+  }
+  function deleteContact(phoneNumberToDelete) {
+    let filteredContacts = contacts.filter(c => c.phoneNumber !== phoneNumberToDelete);
+    setContacts(filteredContacts);
+  }
   let h4s = contacts.map(c => <h4 key={c.phoneNumber}>Phone number: {c.phoneNumber}</h4>)
   // let contactCards = contacts.map(c => <ContactCard
   //   key={c.phoneNumber}
@@ -30,7 +41,10 @@ function ContactsList({ isLoggedIn }) {
       name={c.name}
       email={c.email}
       phoneNumber={c.phoneNumber}
+      starred={c.starred}
+      setStarred={setStarred}
       isLoggedIn={isLoggedIn}
+      deleteContact={deleteContact}
     />)}
     <table>
       <thead>
