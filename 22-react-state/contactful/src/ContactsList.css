@@ -1,0 +1,8 @@
+td,
+th {
+  border: 1px solid black;
+}
+
+.contactsList {
+  font-family: 'Lumanosimo', cursive;
+}
