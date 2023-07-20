@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ContactCard from './ContactCard';
 import './ContactsList.css';
+import ContactsForm from './ContactsForm';
 
 function ContactsList({ isLoggedIn }) {
   const [contacts, setContacts] = useState([
@@ -18,7 +19,7 @@ function ContactsList({ isLoggedIn }) {
   ])
 
   function setStarred(phoneNumberToStar) {
-    setContacts(contacts.map(c => 
+    setContacts(contacts.map(c =>
       c.phoneNumber === phoneNumberToStar ?
         { ...c, starred: true } :
         c))
@@ -27,7 +28,7 @@ function ContactsList({ isLoggedIn }) {
     let filteredContacts = contacts.filter(c => c.phoneNumber !== phoneNumberToDelete);
     setContacts(filteredContacts);
   }
-  let h4s = contacts.map(c => <h4 key={c.phoneNumber}>Phone number: {c.phoneNumber}</h4>)
+  let h4s = contacts.map(c => <h4 key={c.phoneNumber} >Phone number: {c.phoneNumber}</h4>)
   // let contactCards = contacts.map(c => <ContactCard
   //   key={c.phoneNumber}
   //   name={c.name}
@@ -35,6 +36,7 @@ function ContactsList({ isLoggedIn }) {
   //   phoneNumber={c.phoneNumber}
   // />)
   return <ul className="contactsList">
+    <ContactsForm />
     {h4s}
     {contacts.map(c => <ContactCard
       key={c.phoneNumber}
