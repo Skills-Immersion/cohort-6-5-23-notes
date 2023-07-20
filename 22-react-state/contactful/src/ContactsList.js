@@ -17,7 +17,9 @@ function ContactsList({ isLoggedIn }) {
       phoneNumber: "(325) 989-3982"
     }
   ])
-
+  function addContact(newContact) {
+    setContacts([...contacts, newContact])
+  }
   function setStarred(phoneNumberToStar) {
     setContacts(contacts.map(c =>
       c.phoneNumber === phoneNumberToStar ?
@@ -36,7 +38,7 @@ function ContactsList({ isLoggedIn }) {
   //   phoneNumber={c.phoneNumber}
   // />)
   return <ul className="contactsList">
-    <ContactsForm />
+    <ContactsForm addContact={addContact} />
     {h4s}
     {contacts.map(c => <ContactCard
       key={c.phoneNumber}
