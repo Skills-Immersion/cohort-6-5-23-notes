@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import Show from './Show';
+import SearchForm from './SearchForm';
+import SearchResults from './SearchResults';
 
 function App() {
   const [clicks, setClicks] = useState(0);
@@ -15,6 +17,8 @@ function App() {
   // 3. fetch().then(json).then(set the state variable)
   // 4. display data on the page
 
+  const [searchTerm, setSearchTerm] = useState('');
+  const clearSearchTerm = () => setSearchTerm('');
   // 1
   const [shows, setShows] = useState([]);
   // 2
@@ -46,8 +50,12 @@ function App() {
   return (
     <div className="container">
       <h1 onMouseOver={() => setHovers(hovers + 1)} onClick={() => setClicks(clicks + 1)}>TV Showy {hovers} {clicks}</h1>
-      {/* step 4 */}
-      {shows.map(s => <Show key={s.id} show={s} />)}
+      <SearchForm setSearchTerm={setSearchTerm} />
+      {searchTerm ?
+        <SearchResults searchTerm={searchTerm} clearSearchTerm={clearSearchTerm} /> :
+        /* step 4 */
+        shows.map(s => <Show key={s.id} show={s} />)
+      }
       {/* {shows.length > 0 && <Show show={shows[0]} />} */}
     </div>
   );
