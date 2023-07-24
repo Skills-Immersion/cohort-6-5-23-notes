@@ -26,12 +26,22 @@ function App() {
     //   .then(data => setShows(data));
     // option B: async/await
     // write an async function, then call it
+    let abortController = new AbortController();
     async function fetchAllTheShows() {
-      let response = await fetch("https://api.tvmaze.com/shows");
-      let data = await response.json();
-      setShows(data);
+      try {
+        let response = await fetch("https://api.tvmaze.com/shows", { signal: abortController.signal });
+        let data = await response.json();
+        setShows(data);
+      } catch (e) {
+        if (e.name === 'AbortError') {
+          console.log('there was an abort error');
+        } else {
+          throw e;
+        }
+      }
     }
     fetchAllTheShows();
+    return () => abortController.abort();
   }, [])
   return (
     <div className="container">
