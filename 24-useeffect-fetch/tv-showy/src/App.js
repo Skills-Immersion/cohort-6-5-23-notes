@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Link, Route } from "react-router-dom";
 import './App.css';
-import Show from './Show';
-import SearchForm from './SearchForm';
-import SearchResults from './SearchResults';
+import SearchPage from './search/SearchPage';
+import Home from './home/Home';
+import { Switch } from 'react-router-dom/cjs/react-router-dom.min';
+import ShowDetails from './show/ShowDetails';
 
 function App() {
   const [clicks, setClicks] = useState(0);
@@ -11,53 +13,32 @@ function App() {
     document.title = `${Date.now()} is now`
   }, [])
 
-  // setting up to make requests
-  // 1. a state variable to hold the data, eventually, that comes from the API
-  // 2. useEffect to make the request
-  // 3. fetch().then(json).then(set the state variable)
-  // 4. display data on the page
-
-  const [searchTerm, setSearchTerm] = useState('');
-  const clearSearchTerm = () => setSearchTerm('');
-  // 1
-  const [shows, setShows] = useState([]);
-  // 2
-  useEffect(() => {
-    // 3
-    // option A: promises with .then
-    // fetch("https://api.tvmaze.com/shows")
-    //   .then(response => response.json())
-    //   .then(data => setShows(data));
-    // option B: async/await
-    // write an async function, then call it
-    let abortController = new AbortController();
-    async function fetchAllTheShows() {
-      try {
-        let response = await fetch("https://api.tvmaze.com/shows", { signal: abortController.signal });
-        let data = await response.json();
-        setShows(data);
-      } catch (e) {
-        if (e.name === 'AbortError') {
-          console.log('there was an abort error');
-        } else {
-          throw e;
-        }
-      }
-    }
-    fetchAllTheShows();
-    return () => abortController.abort();
-  }, [])
   return (
-    <div className="container">
-      <h1 onMouseOver={() => setHovers(hovers + 1)} onClick={() => setClicks(clicks + 1)}>TV Showy {hovers} {clicks}</h1>
-      <SearchForm setSearchTerm={setSearchTerm} />
-      {searchTerm ?
-        <SearchResults searchTerm={searchTerm} clearSearchTerm={clearSearchTerm} /> :
-        /* step 4 */
-        shows.map(s => <Show key={s.id} show={s} />)
-      }
-      {/* {shows.length > 0 && <Show show={shows[0]} />} */}
-    </div>
+    <Router>
+      <div className="container">
+        <h1 onMouseOver={() => setHovers(hovers + 1)} onClick={() => setClicks(clicks + 1)}>TV Showy {hovers} {clicks}</h1>
+        <nav>
+          <Link to="/">Home</Link>
+          <Link to="/search">Search</Link>
+          {/* <a href="/">Home</a>
+          <a href="/search">Search</a> */}
+        </nav>
+        <Switch>
+          <Route path="/search">
+            <SearchPage />
+          </Route>
+          <Route path="/" exact>
+            <Home />
+          </Route>
+          <Route path="/shows/:potato">
+            <ShowDetails />
+          </Route>
+          <Route>
+            <h4>404, route not found, please return to the home page </h4>
+          </Route>
+        </Switch>
+      </div>
+    </Router>
   );
 }
 

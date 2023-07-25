@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Show from './Show';
+import Show from '../show/Show';
 
 function SearchResults({ searchTerm, clearSearchTerm }) {
   const [shows, setShows] = useState([]);
