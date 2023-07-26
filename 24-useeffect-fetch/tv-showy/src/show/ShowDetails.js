@@ -6,9 +6,14 @@ function ShowDetails() {
   const [show, setShow] = useState({});
   const { potato } = useParams();
   useEffect(() => {
-    fetch(`https://api.tvmaze.com/shows/${potato}`)
+    let abortController = new AbortController();
+    fetch(`https://api.tvmaze.com/shows/${potato}`, { signal: abortController.signal })
       .then(response => response.json())
       .then(data => setShow(data))
+      .catch(e => {
+        if (e.name !== 'AbortError') throw e;
+      })
+    return () => abortController.abort();
   }, [])
   // render that info to the page
   return <div>

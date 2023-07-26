@@ -7,9 +7,14 @@ function SearchResults({ searchTerm, clearSearchTerm }) {
   // it's most likely a dependency, and belongs in the dependency
   // array (the 2nd argument to useEffect)
   useEffect(() => {
-    fetch(`https://api.tvmaze.com/search/shows?q=${searchTerm}`)
+    let abortController = new AbortController();
+    fetch(`https://api.tvmaze.com/search/shows?q=${searchTerm}`, { signal: abortController.signal })
       .then(response => response.json())
       .then(data => setShows(data.map(res => res.show)))
+      .catch(e => {
+        if (e.name !== 'AbortError') throw e;
+      })
+    return () => abortController.abort();
   }, [searchTerm]);
   return <div>
     <h2>
