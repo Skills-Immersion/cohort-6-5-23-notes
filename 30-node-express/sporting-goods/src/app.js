@@ -19,18 +19,16 @@ app.get('/', (req, res, next) => {
   res.send('this is the root route for our sporting goods app, hooray!');
 })
 
+const potato = require('./getCurrentTime');
+
+app.get('/current-time', potato)
+
 // HTTP method (get)
 //      path ('/potato')
 //                  handler function
 app.get('/potato', (req, res, next) => {
   res.send('potatoes are delicious');
 })
-
-const getCurrentTime = (req, res, next) => {
-  res.send(`The current time is ${new Date().toTimeString()}`)
-};
-
-app.get('/current-time', getCurrentTime)
 
 function validateItemExists(req, res, next) {
   let { item } = req.query;
@@ -62,7 +60,7 @@ app.get('/is-it-sport', validateItemExists, (req, res, next) => {
 // 'http://localhost:5000/nearest?item=soccer ball'
 app.get('/nearest', validateItemExists, (req, res, next) => {
   let { item } = req.query;
-  res.send(`The closest ${item} is ${Math.floor(Math.random() * 10) + 1} miles away`);
+  res.semd(`The closest ${item} is ${Math.floor(Math.random() * 10) + 1} miles away`);
 })
 
 app.get('/goods/my-orders', (req, res, next) => {
@@ -71,9 +69,17 @@ app.get('/goods/my-orders', (req, res, next) => {
 
 // part of the URL with a :colon is a route parameter
 // 'http://localhost:5000/goods/soccer ball'
-app.get('/goods/:good', (req, res, next) => {
-  console.log(req.params);
-  res.send(`Yes, we have ${req.params.good} in stock!`)
+app.get('/goods/:id', (req, res, next) => {
+  let { id } = req.params;
+  let numberId = parseInt(id);
+  // go into error handling if they have not provided a number
+  if (isNaN(numberId)) {
+    next(`id must be a number (received ${id})`)
+  } else if (numberId < 0) {
+    next(`id must be positive`)
+  } else {
+    res.send(`Item id: ${id}`)
+  }
 })
 
 // app.use((req, res, next) => {
@@ -81,7 +87,12 @@ app.get('/goods/:good', (req, res, next) => {
 // })
 
 //error handler
+// 2 main ways to get to error handling
+// 1. A real JS code error (res.semd is not a function, could not read property blah of undefined)
+// 2. We realize in one of our middleware/handler functions that there's an error,
+//    so we call next('some argument');
 app.use((error, req, res, next) => {
+  console.log('ERROR HANDLING')
   console.log(error);
   res.status(500).send(error.message ? error.message : error);
 })
