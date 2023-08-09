@@ -69,10 +69,12 @@ app.get('/nearest', validateItemExists, (req, res, next) => {
 
 // goods CRUD goes here
 
+// list
 app.get('/goods', (req, res, next) => {
   res.send({ data: sportingGoods });
 })
 
+// create
 let nextId = 7;
 // create a new sporting good based on the data in the request body
 app.post('/goods', (req, res, next) => {
@@ -91,16 +93,34 @@ app.post('/goods', (req, res, next) => {
   res.status(201).send({ data: newSportingGood });
 })
 
-//get one sporting good by its ID
-app.get('/goods/:id', (req, res, next) => {
-  // look for the good
+function validateSportingGoodExists(req, res, next) {
   let index = sportingGoods.findIndex(good => good.id === Number(req.params.id));
   // if it exists, send it back! if not, error handling time!
   if (index > -1) {
-    res.send({ data: sportingGoods[index] })
+    next();
   } else {
-    next(`Could not find sporting good with id ${req.params.id}`)
+    res.status(404).send(`Could not find sporting good with id ${req.params.id}`)
   }
+}
+
+// read
+// get one sporting good by its ID
+app.get('/goods/:id', validateSportingGoodExists, (req, res, next) => {
+  // look for the good
+  let index = sportingGoods.findIndex(good => good.id === Number(req.params.id));
+  // send it back!
+  res.send({ data: sportingGoods[index] })
+})
+
+// destroy
+app.delete('/goods/:id', validateSportingGoodExists, (req, res, next) => {
+  // use the id from the request params to find the item we're trying to delete
+  // shamelessly stolen from line 100
+  let index = sportingGoods.findIndex(good => good.id === Number(req.params.id));
+  // use splice to remove that item from the array
+  sportingGoods.splice(index, 1);
+  // send a response w/ a 204 status code
+  res.status(204).send();
 })
 
 //error handler
@@ -108,6 +128,11 @@ app.get('/goods/:id', (req, res, next) => {
 // 1. A real JS code error (res.semd is not a function, could not read property blah of undefined)
 // 2. We realize in one of our middleware/handler functions that there's an error,
 //    so we call next('some argument');
+
+// 404
+app.use((req, res, next) => {
+  res.status(404).send(`path not found: ${req.path}`)
+})
 app.use((error, req, res, next) => {
   console.log('ERROR HANDLING')
   console.log(error);
