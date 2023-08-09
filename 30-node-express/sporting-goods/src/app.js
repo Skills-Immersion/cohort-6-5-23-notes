@@ -1,12 +1,15 @@
 const express = require('express');
 const app = express();
 
+const sportingGoods = require('./data');
+
 // good stuff will go here in the future
 
 // Middleware! When requests come in, do some work and then move on to the next function (in our case, the handler that calls res.send)
 
 // app.use does fuzzy matching, so even with the '/' in there, this will match every request
 // app.use works for all HTTP methods (GET, POST, PUT, DELETE, etc)
+app.use(express.json());
 app.use('/', (req, res, next) => {
   console.log('a request came in');
   next();
@@ -63,28 +66,42 @@ app.get('/nearest', validateItemExists, (req, res, next) => {
   res.semd(`The closest ${item} is ${Math.floor(Math.random() * 10) + 1} miles away`);
 })
 
-app.get('/goods/my-orders', (req, res, next) => {
-  res.send('You recently ordered a soccer ball and two goals');
+
+// goods CRUD goes here
+
+app.get('/goods', (req, res, next) => {
+  res.send({ data: sportingGoods });
 })
 
-// part of the URL with a :colon is a route parameter
-// 'http://localhost:5000/goods/soccer ball'
+let nextId = 7;
+// create a new sporting good based on the data in the request body
+app.post('/goods', (req, res, next) => {
+  // grab the data we want from the request body
+  // assign an ID
+  let newSportingGood = {
+    name: req.body.data.name,
+    description: req.body.data.description,
+    price: req.body.data.price,
+    id: nextId
+  }
+  nextId++;
+  // save the new data into our array of sporting goods
+  sportingGoods.push(newSportingGood);
+  // send back the data in the response
+  res.status(201).send({ data: newSportingGood });
+})
+
+//get one sporting good by its ID
 app.get('/goods/:id', (req, res, next) => {
-  let { id } = req.params;
-  let numberId = parseInt(id);
-  // go into error handling if they have not provided a number
-  if (isNaN(numberId)) {
-    next(`id must be a number (received ${id})`)
-  } else if (numberId < 0) {
-    next(`id must be positive`)
+  // look for the good
+  let index = sportingGoods.findIndex(good => good.id === Number(req.params.id));
+  // if it exists, send it back! if not, error handling time!
+  if (index > -1) {
+    res.send({ data: sportingGoods[index] })
   } else {
-    res.send(`Item id: ${id}`)
+    next(`Could not find sporting good with id ${req.params.id}`)
   }
 })
-
-// app.use((req, res, next) => {
-//   res.send('route not found');
-// })
 
 //error handler
 // 2 main ways to get to error handling
