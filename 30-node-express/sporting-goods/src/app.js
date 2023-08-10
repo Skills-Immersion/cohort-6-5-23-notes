@@ -5,6 +5,7 @@ const app = express();
 // create function review
 // testing the create function
 // writing an update function
+// Fun With Validators (especially for create/update)
 
 
 // good stuff will go here in the future

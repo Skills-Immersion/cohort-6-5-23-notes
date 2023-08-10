@@ -36,6 +36,46 @@ describe('/goods GET', () => {
   })
 })
 
+describe('/goods POST', () => {
+  test('creating a new good works', async () => {
+    // set up a bunch of data to send to the server
+    const newGood = {
+      name: 'snorkel',
+      description: 'swim',
+      price: 7
+    };
+    // make my request
+    const response = await request(app)
+      .post('/goods')
+      .set('Accept', 'application/json')
+      .send({ data: newGood });
+    const expectedNewGood = {
+      ...newGood,
+      id: 7
+    }
+    // make sure the response contains the same data I sent
+    expect(response.body.data).toEqual(expectedNewGood)
+    // make sure the data I sent was added to the sportingGoods array
+    expect(sportingGoods[sportingGoods.length - 1]).toEqual(expectedNewGood);
+  })
+  test('creating a new good without a name fails', async () => {
+    // set up a bunch of data to send to the server
+    const newGood = {
+      description: 'swim',
+      price: 7
+    };
+    // make my request
+    const response = await request(app)
+      .post('/goods')
+      .set('Accept', 'application/json')
+      .send({ data: newGood });
+
+    // make sure we got the correct error message
+    expect(response.statusCode).toEqual(400);
+    expect(response.body.error).toEqual(expect.stringContaining('name'))
+  })
+})
+
 describe('errors', () => {
   test('404 error', async () => {
     const response = await request(app).get('/asdfasdfasdfasdf');

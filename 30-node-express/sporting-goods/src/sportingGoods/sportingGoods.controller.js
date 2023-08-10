@@ -7,6 +7,41 @@ const list = (req, res, next) => {
   res.send({ data: sportingGoods });
 };
 
+// function validateNameInBody(req, res, next) {
+//   if (req.body.data && req.body.data.name) {
+//     next();
+//   } else {
+//     next({
+//       status: 400,
+//       message: `You did not include the name in your request.body.data.`
+//     })
+//   }
+// }
+
+// function validateDescriptionInBody(req, res, next) {
+//   if (req.body.data && req.body.data.description) {
+//     next();
+//   } else {
+//     next({
+//       status: 400,
+//       message: `You did not include the description in your request.body.data.`
+//     })
+//   }
+// }
+
+// generates a validator function for the given property
+function validatorFor(property) {
+  return function (req, res, next) {
+    if (req.body.data && req.body.data[property]) {
+      next();
+    } else {
+      next({
+        status: 400,
+        message: `You did not include the ${property} in your request.body.data.`
+      })
+    }
+  }
+}
 // create
 // create a new sporting good based on the data in the request body
 let nextId = 7;
@@ -55,7 +90,7 @@ const destroy = (req, res, next) => {
 // export the functions for use in the router
 module.exports = {
   list,
-  create,
+  create: [...(['name', 'description', 'price'].map(validatorFor)), create],
   read: [validateSportingGoodExists, read],
   destroy: [validateSportingGoodExists, destroy]
 }
