@@ -63,24 +63,29 @@ const create = (req, res, next) => {
 
 function validateSportingGoodExists(req, res, next) {
   let index = sportingGoods.findIndex(good => good.id === Number(req.params.id));
+  // in the future...
+  // get the sporting good from our database, and if it exists, we'll save the whole sporting good into res.locals
+
   // if it exists, send it back! if not, error handling time!
   if (index > -1) {
+    // save the index into res.locals for use in read/destroy
+    res.locals.index = index;
+    res.locals.potato = sportingGoods[index];
     next();
   } else {
     next({ status: 404, message: `Could not find sporting good with id ${req.params.id}` })
   }
 }
 const read = (req, res, next) => {
-  // look for the good
-  let index = sportingGoods.findIndex(good => good.id === Number(req.params.id));
+  // use the index that we found in the validateSportingGoodExists function
+  let { potato } = res.locals;
   // send it back!
-  res.send({ data: sportingGoods[index] })
+  res.send({ data: potato })
 };
 
 const destroy = (req, res, next) => {
-  // use the id from the request params to find the item we're trying to delete
-  // shamelessly stolen from line 100
-  let index = sportingGoods.findIndex(good => good.id === Number(req.params.id));
+  // use index from validateSportingGoodExists
+  let { index } = res.locals;
   // use splice to remove that item from the array
   sportingGoods.splice(index, 1);
   // send a response w/ a 204 status code
