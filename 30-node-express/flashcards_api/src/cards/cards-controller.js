@@ -2,10 +2,24 @@ const cuid = require("cuid");
 const { cards, decks } = require("../dataStore");
 const logger = require("../logger");
 
+// Option 2: mount the entire router (and modify the existing list function)
 const list = (req, res) => {
-  res
-    .json({ data: cards });
+  const { deckId } = req.params;
+  if (deckId) {
+    const cardsForDeck = cards.filter(c => c.deckId === deckId);
+    res.json({ data: cardsForDeck })
+  } else {
+    res
+      .json({ data: cards });
+  }
 };
+
+// Option 1: write a separate route handler
+const listCardsForDeck = (req, res, next) => {
+  const { deckId } = req.params;
+  const cardsForDeck = cards.filter(c => c.deckId === deckId);
+  res.json({ data: cardsForDeck })
+}
 
 const create = (req, res, next) => {
   const { data } = req.body;
@@ -20,7 +34,7 @@ const create = (req, res, next) => {
   const { front, back, deckId } = data;
 
   // Validate required fields are present
-  const requiredFields = ["front","back","deckId"];
+  const requiredFields = ["front", "back", "deckId"];
   for (const field of requiredFields) {
     if (!data[field]) {
       const message = `'${field}' is required`;
@@ -39,7 +53,7 @@ const create = (req, res, next) => {
       status: 400,
       message,
     });
-  } 
+  }
 
   // Create an ID
   const id = cuid();
@@ -79,7 +93,7 @@ const destroy = (req, res, next) => {
   const { cardId } = req.params;
   const cardIndex = cards.findIndex(c => c.id === cardId);
 
-  if(cardIndex === -1) {
+  if (cardIndex === -1) {
     const message = `Card id ${cardId} does not exist`;
     return next({
       status: 404,
@@ -98,4 +112,5 @@ module.exports = {
   create,
   read,
   destroy,
+  listCardsForDeck
 };
