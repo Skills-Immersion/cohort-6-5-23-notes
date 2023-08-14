@@ -1,0 +1,44 @@
+[
+  {
+    "id": "jsci052x617rt8rjonknn2h4",
+    "name": "Pikachu",
+    "type": "electric",
+    "popularity": 10
+  },
+  {
+    "id": "juwfrhy6zixo64icut6clsjl",
+    "name": "Dragonite",
+    "type": "Dragon/Flying",
+    "popularity": 7
+  },
+  {
+    "id": "njejqkcsjvz2o2hdkdm49qro",
+    "name": "eevee",
+    "type": "normal",
+    "popularity": 9
+  },
+  {
+    "id": "dcyeh8yiqwzym8tnlzphtpxm",
+    "name": "Agumon",
+    "type": "digimon",
+    "popularity": 10
+  },
+  {
+    "id": "dk9xzhnscmyjzwb5zsdwywp5",
+    "name": "Snorlax",
+    "type": "Rawr",
+    "popularity": 9.42
+  },
+  {
+    "id": "vllat100qbwnmaav540527rk",
+    "name": "Pyrofox",
+    "type": "fire",
+    "popularity": 1
+  },
+  {
+    "id": "um7xwleg66apvqyhrag505d6",
+    "name": "Exeggutor",
+    "type": "grass",
+    "popularity": 8
+  }
+]
