@@ -1,8 +1,20 @@
 const { createId } = require('@paralleldrive/cuid2');
+const knex = require('../db/connection');
 const { pokemon } = require('../data');
 
 function list(req, res, next) {
-  res.json({ data: pokemon })
+  // go get the data from the database and send it back to the client
+  knex('pokemon')
+    .select('*')
+    .then(data => res.json({
+      data: data.map(
+        ({ id, pokemon_name, pokemon_type, popularity }) => ({
+          id,
+          popularity,
+          name: pokemon_name,
+          type: pokemon_type
+        }))
+    }))
 }
 
 function findPokemon(req, res, next) {
@@ -96,9 +108,23 @@ function update(req, res, next) {
 }
 
 function destroy(req, res, next) {
-  const { index } = res.locals;
-  pokemon.splice(index, 1);
-  res.status(204).send();
+  // use the ID from the req.params to tell knex what to delete
+  knex('pokemon')
+    // WHERE id = req.params.id
+    .where('id', req.params.id)
+    .del()
+    // and then send our response
+    .then((numberOfRows) => {
+      console.log('number of rows:', numberOfRows)
+      if (numberOfRows > 0) {
+        res.status(204).send()
+      } else {
+        next({
+          status: 404,
+          message: 'not found'
+        })
+      }
+    })
 }
 
 module.exports = {
@@ -117,5 +143,5 @@ module.exports = {
     validatePopularity,
     update
   ],
-  destroy: [findPokemon, destroy]
+  destroy: destroy
 }
