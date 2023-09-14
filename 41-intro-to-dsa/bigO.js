@@ -93,7 +93,7 @@ function printPairsNotDependant(array) {
     }
     return count;
 }
-console.log(printPairsNotDependant([1,2,3,4,5,6,7,8,9]));
+console.log(printPairsNotDependant([1,2,3,4,5,6,7,8,9,10]));
 // note that this has an inner array that will always execute three step. this is nested for loops but is not
 // O(n^2) the time complexity of the function is O(n).
 // the example below the inner loop depends on the outer loop so it is O(n^2)
@@ -107,6 +107,6 @@ function printPairs(array) {
     }
     return count
 }
-console.log(printPairs([1,2,3,4,5,6,7,8,9]));
+console.log(printPairs([1,2,3,4,5,6,7,8,9,10,11,12,13]));
 
 
