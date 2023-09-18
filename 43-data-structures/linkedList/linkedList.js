@@ -8,6 +8,7 @@ class Node {
 }
 
 class LinkedList {
+    //attributes
     constructor() {
         this.head = null;
     }
@@ -36,7 +37,7 @@ class LinkedList {
             //continue searching
             index++;
             //tell our node to be the next node
-            // 11 | --> 7 | --> 13 | --> o
+            // 13 | --> 11 | --> 7 | --> o
             node = node.next
         }
     }
@@ -49,15 +50,55 @@ class LinkedList {
             let previousNode = this.find(isMatch);
             //if we didnt find the node
             if (!previousNode) throw new Error("no node silly");
-            let newNode = new Node(64, previousNode.next);
+            let newNode = new Node(value, previousNode.next);
             previousNode.next = newNode;
         } else {
             this.addToFront(value) //call if sll is empty
         }
     }
 
+    removeFront() {
+        if ( this.head ) {
+            this.head = this.head.next //{13 -> {11 ->}}
+        }
+        return this;
+    }
+
+    remove(isMatch) {
+        // i = 2
+        //                  
+        // 13 -> 11  -> 6
+        // 0     1      2    
+        if (this.head === null) {// List is empty
+            return this;
+        }
+
+        // If head node matches what we are looking for
+        if ( isMatch(this.head, 0)) {
+            return this.removeFront();
+        }
+
+        //otherwise we need to traverse
+        let index = 1;
+        let previousNode = this.head;
+        let currentNode = this.head.next;
+
+        while (currentNode) {
+            if ( isMatch(currentNode, index)) {
+                previousNode.next = currentNode.next;
+                return this;
+            }
+            // move to the next node
+            previousNode = currentNode;
+            currentNode = currentNode.next;
+            index++
+        }
+        return this; // if the node was not found return the sll
+    }
+
 }
 
 let sll = new LinkedList()
 sll.addToFront(7).addToFront(11).addToFront(13)
-console.log(sll);
+let momsLuckyNumber = sll.find((node, index) => index === 2)
+console.log(momsLuckyNumber);
