@@ -76,7 +76,7 @@ class Queue {
         if ( dequeued === this.last ) {
             this.last = null
         }
-        return dequeued.value;
+        return dequeued;
     }
 
 }
