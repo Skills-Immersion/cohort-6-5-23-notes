@@ -207,12 +207,108 @@ class BST {
         return values;
     }
     // [4,2,6,1,3,5,7]    Q 
+
+
+    
+    getHeight() {
+        /**
+     * This method calculates the height of a binary tree.
+     *
+     * The height of a tree is the length of the longest path from the root to a leaf.
+     * The height of a tree with a single node (root only) is 0.
+     * The height of an empty tree (no nodes) is -1.
+     * 
+     * For Example:
+     * 
+     *      A       The height of this tree is 2 (A -> C -> D)
+     *     / \
+     *    B   C
+     *         \
+     *          D
+     * 
+     *      E       The height of this tree is 1 (E -> F)
+     *     /
+     *    F
+     * 
+     *      G       The height of this tree is 0 as there is only one node.
+     * 
+     */
+        // Base case: If the tree is empty (this.key === null), return -1.
+        if ( this.key === null ) return -1;
+        
+        // Initialize variables to hold the height of the left and right subtrees.
+        let leftHeight = -1;  // default value for empty subtree
+        let rightHeight = -1; // default value for empty subtree
+        
+        // If there is a left child, calculate the height of the left subtree.
+        if ( this.left ) leftHeight = this.left.getHeight();
+        
+        // If there is a right child, calculate the height of the right subtree.
+        if ( this.right ) rightHeight = this.right.getHeight();
+        
+        // The height of the current tree is the maximum of the heights of its left and right subtrees, plus 1.
+        return Math.max(leftHeight, rightHeight) + 1;
+    }
+   
+    
+    isBalanced() {
+         /**
+     * This method checks if a binary tree is balanced.
+     * 
+     * A binary tree is considered balanced if:
+     *  - The left and right subtrees of every node differ in height by at most one.
+     *  - Both the left and right subtrees are also balanced.
+     *
+     * For Example: 
+     *     A                 B                  C
+     *    / \               / \                / \
+     *   B   C       is    C   D        is    D   E
+     *  / \               /                 / \
+     * D   E             F                 F   G
+     * 
+     *  Tree A, B, and C are balanced binary trees as the left and right subtrees of every node differ in height by at most one.
+     *
+     *   Tree D is not balanced.
+     *     D
+     *    /
+     *   E
+     *  / \
+     * F   G
+     * 
+     */
+        // Base case: If the tree is empty (this.key === null), return true as an empty tree is balanced.
+        if (this.key === null) return true;
+            
+        // Initialize variables to hold the height of the left and right subtrees.
+        let leftHeight = -1;
+        let rightHeight = -1;
+        
+        // If there is a left child, calculate the height of the left subtree.
+        if ( this.left ) leftHeight = this.left.getHeight();
+        
+        // If there is a right child, calculate the height of the right subtree.
+        if (this.right) rightHeight = this.right.getHeight();
+        
+        // Check if the difference in heights of left and right subtrees is more than 1.
+        if (Math.abs(leftHeight - rightHeight) > 1) return false;
+        
+        // Recursively check if the left subtree and the right subtree are balanced.
+        return (this.left ? this.left.isBalanced() : true) && (this.right ? this.right.isBalanced() : true);
+    }
+    /*
+    *    4
+    *   / \
+    *      6
+    *       7 
+    */
+    
 }
 
 let bst = new BST()
-bst.insert(4, 4).insert(2, 2).insert(6, 6).insert(1, 1).insert(3, 3).insert(5, 5).insert(7, 7)
+bst.insert(4, 4).insert(6, 6).insert(7,7)
+console.log(bst.getHeight());
 /*
         4
     2       6
-  1   3   5   
+  1   3   5   7
 */
