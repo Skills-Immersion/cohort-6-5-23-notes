@@ -41,3 +41,9 @@ function fibRecursive(n) {
 }
 
 fibRecursive(50) // 8
+
+// Time Complexity: 
+
+// O(2^ n)
+// Space Complexity: 
+// O(n)

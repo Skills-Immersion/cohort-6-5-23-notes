@@ -1,5 +1,5 @@
 /*
-splitting array in HALF until we get a single sorted array  O (log n)
+splitting array in HALF until we get a single sorted array 
                     [8,3,5,4,7,6,1,2]
             [8,3,5,4]              [7,6,1,2]
           [8,3]   [5,4]           [7,6]   [1,2]
@@ -11,8 +11,7 @@ merge the sorted halves, and put the small ones in first  O(N)
         [8]    [3]     [5]     [4]     [7]     [6]     [1]      [2]
                     [3,8]    [4,5]    [6,7]    [1,2]
                         [3,4,5,8]           [1,2,6,7]
-                            [1,2,3,4,5,6,7,8]     
-O (n log n)                
+                            [1,2,3,4,5,6,7,8]                    
 */ 
 
 function compare(a, b) {

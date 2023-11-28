@@ -11,4 +11,20 @@ function mapProperties(configuration) {
     };
 }
 
-module.exports = mapProperties;
+function formatPrice(price) {
+    return Number(parseFloat(price).toFixed(2));
+}
+
+function transformPriceToNumber(item) {
+    return {
+        supplier_id: item.supplier_id,
+        min_price: formatPrice(item.min_price),
+        max_price: formatPrice(item.max_price),
+        avg_price: formatPrice(item.avg_price)
+    };
+}
+
+module.exports = {
+    mapProperties,
+    transformPriceToNumber
+};

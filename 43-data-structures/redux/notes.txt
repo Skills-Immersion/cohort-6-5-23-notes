@@ -1,0 +1,19 @@
+Redux is a state management library for Javascript apps
+Can be used with REACT or Vanilla Javascript
+
+Redux provides a single source of truth for application state, making it easier to manage and predict state changes
+
+there are three main core concepts to the Redux architecture
+ACTIONS STORE REDUCER
+
+[Action] --dispatched to--> [Store]
+    ^                           |
+    |                           | 
+    |                           v
+[Reducers] <---- updates ---- [State]
+
+Action: A plain JavaScript object representing what happened and what needs to change. It's the only source of information for the store.
+Store: The central location where the application's state is stored. It dispatches actions to reducers.
+Reducers: Functions that determine how the state changes in response to actions sent to the store.
+State: The single source of truth in the application, representing its current state. It is updated based on the actions processed by reducers.
+

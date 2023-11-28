@@ -98,7 +98,39 @@ class LinkedList {
 
 }
 
+// Loop through until we find item before the first item greater than the
+  // value, then insert
+  // O(n), single loop through the LL
+  insertSorted(value) {
+    const newNode = new Node(value);
+
+    if (this.head === null) {
+      // It's an empty linked list, so the new node becomes the head
+      this.head = newNode;
+      newNode.next = null;
+      return;
+    }
+
+    if (value < this.head.value) {
+      // The value should be inserted at the start of the list, so the new node
+      // becomes the new head, and points to the old head
+      newNode.next = this.head;
+      this.head = newNode;
+      return;
+    }
+
+    let node = this.head;
+    // Loop until we find the node before our insertion point
+    while (node.next && node.next.value < value) {
+      node = node.next;
+    }
+    // Update the pointers
+    newNode.next = node.next;
+    node.next = newNode;
+  }
+
 let sll = new LinkedList()
 sll.addToFront(7).addToFront(11).addToFront(13)
 let momsLuckyNumber = sll.find((node, index) => index === 2)
 console.log(momsLuckyNumber);
+ 

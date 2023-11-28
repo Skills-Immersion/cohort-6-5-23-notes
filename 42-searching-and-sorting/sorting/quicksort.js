@@ -1,5 +1,4 @@
 /*time complexity  
-O( n log n)  * could be O(n^2)
                  p   
                 [5,2,1,8,4,7,6,3]
                        5              5 is in the right spot idx of 4
@@ -15,7 +14,6 @@ O( n log n)  * could be O(n^2)
                           7          7 is in the right spot idx of 6
                         6   8 
             1 , 2 ,3 ,4 ,5 ,6 ,7 ,8
-Space complexity  O(1) 
 */ 
 
 function compare(a, b) {
@@ -39,8 +37,8 @@ function quickSort(compare, arr, lowerIndex = 0, upperIndex = arr.length - 1) {
     return arr;
 }
 
-//            p
-// [3,2,1,4,5,7,6,8]
+//  p i
+// [6,9,1,2,5,7,6,8]
 
 
 // 3,2,1,4   5  7,6,8
