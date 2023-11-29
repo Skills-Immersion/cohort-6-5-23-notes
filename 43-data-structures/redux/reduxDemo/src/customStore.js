@@ -1,6 +1,6 @@
 import reducer from "./reducer.js";
 
-function createStore() {
+function createStore(reducer) {
     let state;
     let listenersList = [
     //     () => {
@@ -19,7 +19,7 @@ function createStore() {
         return state
     }
 
-    function dispatch() {
+    function dispatch(action) {
         //change store
         state = reducer(state, action)
         // notify the subscribers
@@ -36,4 +36,4 @@ function createStore() {
     }
 }
 
-export default createStore();
+export default createStore(reducer);

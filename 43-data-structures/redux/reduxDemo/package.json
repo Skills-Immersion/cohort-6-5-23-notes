@@ -11,6 +11,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@reduxjs/toolkit": "^1.9.7",
+    "axios": "^1.6.2",
     "redux": "^4.2.1"
   }
 }

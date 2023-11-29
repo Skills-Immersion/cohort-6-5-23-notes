@@ -1,4 +1,4 @@
-import { ICE_CREAM_ADDED, ICE_CREAM_REMOVED } from "./actionTypes.js"
+import { POKEMON_ADDED, POKEMON_REMOVED } from "./actionTypes.js"
 // { actions
 //     type: "addIceCream",
 //     payload: {
@@ -12,20 +12,20 @@ import { ICE_CREAM_ADDED, ICE_CREAM_REMOVED } from "./actionTypes.js"
 //          id: 1
 //    }
 // }
-let iceCreamId = 0;
+let pokemonId = 0;
 
 function reducer(state = [], action) {
     switch (action.type) {
-        case ICE_CREAM_ADDED:
+        case POKEMON_ADDED:
             return [
                 ...state,
                 {
-                   id: ++ iceCreamId,
-                   flavor: action.payload.flavor
+                   id: ++ pokemonId,
+                   flavor: action.payload.pokeName
                 }
             ];
-        case ICE_CREAM_REMOVED:
-            return state.filter( iceCreamObj => iceCreamObj.id !== action.payload.id)
+        case POKEMON_REMOVED:
+            return state.filter( pokemonObj => pokemonObj.id !== action.payload.id)
         default:
             return state;
     }

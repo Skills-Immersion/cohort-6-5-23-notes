@@ -1,2 +1,2 @@
-export const ICE_CREAM_ADDED = "iceCreamAdded";
-export const ICE_CREAM_REMOVED = "iceCreamRemoved";
+export const POKEMON_ADDED = "pokemonAdded";
+export const POKEMON_REMOVED = "pokemonRemoved";

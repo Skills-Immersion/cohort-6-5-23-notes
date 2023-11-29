@@ -1,9 +1,15 @@
-import { createStore } from "redux"
-import reducer from "./reducer.js"
+import pkg from '@reduxjs/toolkit';
+const { configureStore } = pkg;
+import pokemonReducer from "./pokemon.js"
+
+const store = configureStore({
+    reducer: {
+        pokemonReducer
+    }
+})
 
 
-const store = createStore(reducer)
-
-
+console.log(store);
 
 export default store
+

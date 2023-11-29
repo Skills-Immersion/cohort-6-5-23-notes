@@ -1,17 +1,18 @@
-import { ICE_CREAM_ADDED, ICE_CREAM_REMOVED } from "./actionTypes.js"
+import { POKEMON_ADDED, POKEMON_REMOVED } from "./actionTypes.js"
 
-export function iceCreamAdded(flavor) {
+export function pokemonAdded(pokeName) {
+
     return {
-        type: ICE_CREAM_ADDED,
+        type: POKEMON_ADDED,
         payload: {
-            flavor
+            pokeName
         }
     }
 }
 
-export function iceCreamRemoved(id) {
+export function pokemonRemoved(id) {
     return {
-        type: ICE_CREAM_REMOVED,
+        type: POKEMON_REMOVED,
         payload: {
             id
         }

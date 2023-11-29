@@ -1,12 +1,22 @@
-import customStore from "./customStore.js";
-import { iceCreamAdded, iceCreamRemoved } from "./actionCreators.js";
+import store from "./store.js";
+import { pokemonAdded, pokemonRemoved } from "./pokemon.js";
 
 
-const store = customStore
 
-store.subscribe(() => {
-    console.log("store changed");
-})
-store.dispatch(iceCreamAdded("pistachio"))
 
-console.log(store.getState());
+function logState() {
+    console.log("current State", store.getState());
+}
+
+store.subscribe(logState)
+
+async function catchEmAll() {
+    console.log("adding gengar");
+    await store.dispatch(pokemonAdded("gengar"))
+    await store.dispatch(pokemonAdded("bidoof"))
+    await store.dispatch(pokemonAdded("delcatty"))
+}
+
+catchEmAll()
+
+
